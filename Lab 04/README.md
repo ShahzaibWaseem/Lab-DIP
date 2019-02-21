@@ -5,5 +5,5 @@ Connected components labeling scans an image and groups its pixels into componen
 
 Extracting and labeling of various disjoint and connected components in an image is central to many automated image analysis applications. 
 
-##Lab Tasks
+## Lab Tasks
 Implement the connected component labeling algorithm discussed in class on the image given in the lab.
