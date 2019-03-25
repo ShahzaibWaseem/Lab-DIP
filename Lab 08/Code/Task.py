@@ -35,6 +35,7 @@ def TilingApproach(image):
 	# HISTOGRAMS
 	plt.hist(image.ravel(), 256, [0,256])
 	plt.savefig("../Images/originalImage_Histogram.png")
+	plt.show()
 
 	print("Top Left:\t", 0, "\t", tileX, "\t", 0, "\t", tileY)
 	print("Bottom Left:\t", tileX, "\t", width, "\t", 0, "\t", tileY)
@@ -48,6 +49,19 @@ def TilingApproach(image):
 	image[tileX: width, 0: tileY] = HistogramEqualization(image[tileX: width, 0: tileY])
 	image[0: tileX, tileY: height] = HistogramEqualization(image[0: tileX, tileY: height])
 	image[tileX: width, tileY: height] = HistogramEqualization(image[tileX: width, tileY: height])
+
+	plt.hist(image[0: tileX, 0: tileY].ravel(), 256, [0,256])
+	plt.savefig("../Images/Tile/localEqualization_Histogram(lt).png")
+	plt.show()
+	plt.hist(image[tileX: width, 0: tileY].ravel(), 256, [0,256])
+	plt.savefig("../Images/Tile/localEqualization_Histogram(bl).png")
+	plt.show()
+	plt.hist(image[0: tileX, tileY: height].ravel(), 256, [0,256])
+	plt.savefig("../Images/Tile/localEqualization_Histogram(tr).png")
+	plt.show()
+	plt.hist(image[tileX: width, tileY: height].ravel(), 256, [0,256])
+	plt.savefig("../Images/Tile/localEqualization_Histogram(br).png")
+	plt.show()
 
 	cv2.imshow("After Local Enhancement", image)
 	cv2.waitKey(0)
@@ -69,7 +83,7 @@ def SlidingWindowApproach(image, window):
 
 	for x in range(height - window):
 		for y in range(width - window):
-			newImage[x: x + window, y: y + window] = cv2.equalizeHist(image[x: x + window, y: y + window])
+			newImage[x: x + window, y: y + window] = HistogramEqualization(image[x: x + window, y: y + window])
 
 	plt.hist(newImage.ravel(), 256, [0,256])
 	plt.savefig("../Images/localEqualization_Histogram(sliding).png")
@@ -80,6 +94,7 @@ def main():
 	image = cv2.imread(IMAGE_PATH, 0)
 	window = 64
 
+	TilingApproach(image)
 	SlidingWindowApproach(image.copy(), window)
 
 if __name__ == '__main__':
