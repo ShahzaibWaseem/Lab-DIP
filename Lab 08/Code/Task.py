@@ -94,7 +94,7 @@ def main():
 	image = cv2.imread(IMAGE_PATH, 0)
 	window = 64
 
-	TilingApproach(image)
+	# TilingApproach(image)
 	SlidingWindowApproach(image.copy(), window)
 
 if __name__ == '__main__':
