@@ -17,13 +17,13 @@ Perform Global histogram equalization to enhance this image. Save and show the o
 ##### Tiling Approach
 Use least four tiles. Save and show the original histograms and the processed histogram from each tile, along with the final complete image.
 
-|*Local* Histogram Enhancing - *Tiling Approach*|Histogram|
+|*Local* Histogram Enhancing - *Tiling*|Histogram|
 |--|--|
 |![](https://lh4.googleusercontent.com/wzgF2aNfqYz4jUz7UpyKbsYgWUSgjdJh_7zfDamybRMZ3yAHw43mQ22K_pVb-RBU2aFIeufCtb3V_8tsSC2iMjzDYIXP7vw_K1fe5njrT13YemSgPx3SvfmiBpgZBiSO5FRVevVa)|![](https://lh5.googleusercontent.com/3VQFQeT_37KU8_lWdw6VpzM-JaAn4ThbbNiMO5onvBO5aPU--pLoA3uHwc1mcfC3zqHop2X7AjtBYJGLnhaGpzfuPlosbfZh9-70UKZfiOECcpckktpFbhXO-75I8ojdH5a-s4MY)|
 
 ##### Sliding Window Approach
 displacement by one pixel size in each iteration. Save and show the original histograms and the processed histograms, along with the final complete image.
-|*Local* Histogram Enhancing - *Sliding Window Approach*|Histogram|
+|*Local* Histogram Enhancing - *Sliding Window*|Histogram|
 |--|--|
 |![](https://lh6.googleusercontent.com/kerkBPrvNDowAck4Goifwrl2PGJGyuA7LvIMwXYz07OGA21ua9_rAj8XDD3kU2Pd4e10G3JEIav8UgSQpE5ULtLcLUoyDQMCZWGaxUbxm2PDYhILXEDcL_WL38fzcWp_aP0rn_K5)|![](https://lh3.googleusercontent.com/5DgaIWEDiU7iej4bHRZTVvBzT0dhL1aA16kAfn0b55Eewq11q7qGRFeEsqXfG2cWywd1qa33nIOm3tm2YSIclcYc9Fl-93IsBis9NS_DNBwYD3q_VbYidM1GIHuOM2er9ogc4dPH)|
 
