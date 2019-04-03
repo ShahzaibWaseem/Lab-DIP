@@ -24,11 +24,23 @@ def main():
 
 	image = cv2.imread(IMAGE_PATH + smoothing_image, 0)
 	# filter = np.ones((windowSize, windowSize)) / (windowSize * windowSize)
-	filter = np.array([ [1, 2, 1], [2, 4, 2], [1, 2, 1] ], np.int32) / 16
-	newImage = Smoothening(image.copy(), filter)
+	# filter = np.array([ [1, 2, 1], [2, 4, 2], [1, 2, 1] ], np.int32) / 16
+
+	sigma = 1.4
+	gaussianFilter = np.array([ [1, 1, 2, 2, 2, 1, 1],
+								[1, 2, 2, 4, 2, 2, 1],
+								[2, 2, 4, 8, 4, 2, 2],
+								[2, 4, 8,16, 8, 4, 2],
+								[2, 2, 4, 8, 4, 2, 2],
+								[1, 2, 2, 4, 2, 2, 1],
+								[1, 1, 2, 2, 2, 1, 1] ], np.float)
+
+	gaussianFilter = gaussianFilter / np.sum(gaussianFilter * sigma)
+
+	newImage = Smoothening(image.copy(), gaussianFilter)
 
 	stackedImage = np.hstack((image, newImage))
-	cv2.imwrite(IMAGE_PATH + "weightedAverage " + smoothing_image.split(".")[0] + ".png", newImage)
+	cv2.imwrite(IMAGE_PATH + "gaussianFilter " + smoothing_image.split(".")[0] + ".png", newImage)
 
 	plt.imshow(stackedImage, cmap='gray')
 	plt.show()
