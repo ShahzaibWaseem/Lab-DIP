@@ -20,7 +20,7 @@ def Smoothening(image, filter):
 def main():
 	IMAGE_PATH = "../Images/"
 	smoothing_image = "smoothing.tif"
-	windowSize = 3			# Change this to whatever filter you require
+	windowSize = 7			# Change this to whatever filter you require
 
 	image = cv2.imread(IMAGE_PATH + smoothing_image, 0)
 	# filter = np.ones((windowSize, windowSize)) / (windowSize * windowSize)
