@@ -30,9 +30,22 @@ def medianSmoothing(image, windowSize):
 			newImage[x-padSize, y-padSize] = pixels[(windowSize**2) // 2]
 	return newImage
 
+def edgesDetection(image, filter):
+	height, width = image.shape
+	windowSize = filter.shape[1]
+	padSize = windowSize // 2		# Integer Division
+	newImage = np.zeros(image.shape)
+	image = np.pad(image, (padSize, padSize), 'constant', constant_values=(0) )
+
+	for x in range(padSize, height - padSize):
+		for y in range(padSize, width - padSize):
+			pixels = image[x-padSize:x+padSize+1, y-padSize:y+padSize+1]
+			newImage[x-padSize, y-padSize] = (np.sum(np.multiply(pixels, filter)))/3
+	return newImage
+
 def main():
 	IMAGE_PATH = "../Images/"
-	smoothing_image = "saltandpaper.tif"
+	smoothing_image = "two_cats.jpg"
 	# windowSize = 7			# Change this to whatever filter you require
 
 	image = cv2.imread(IMAGE_PATH + smoothing_image, 0)
@@ -60,10 +73,24 @@ def main():
 	# newImage = Smoothening(image, filter)
 	# newImage = image + (image - newImage)
 
-	newImage = medianSmoothing(image, 3)	# Filter Size = 3x3
+	# newImage = medianSmoothing(image, 3)	# Filter Size = 3x3
 
-	stackedImage = np.hstack((image, newImage))
-	cv2.imwrite(IMAGE_PATH + "output " + smoothing_image.split(".")[0] + ".png", newImage)
+	# Task 5
+	horizontalFilter = np.array([ [1, 1, 1], [0, 0, 0], [-1, -1, -1] ], dtype=np.int32)
+	verticalFilter = np.array([ [-1, 0, 1], [-1, 0, 1], [-1, 0, 1] ], dtype=np.int32)
+
+	horizontalEdges = edgesDetection(image, horizontalFilter)
+	verticalEdges = edgesDetection(image, verticalFilter)
+
+	edges = verticalEdges + horizontalEdges
+
+	horizontalStack1 = np.hstack((image, horizontalEdges))
+	horizontalStack2 = np.hstack((verticalEdges, edges))
+	stackedImage = np.vstack((horizontalStack1, horizontalStack2))
+
+	cv2.imwrite(IMAGE_PATH + "horizontalEdges " + smoothing_image.split(".")[0] + ".png", horizontalEdges)
+	cv2.imwrite(IMAGE_PATH + "verticalEdges " + smoothing_image.split(".")[0] + ".png", verticalEdges)
+	cv2.imwrite(IMAGE_PATH + "edges " + smoothing_image.split(".")[0] + ".png", edges)
 
 	plt.imshow(stackedImage, cmap='gray')
 	plt.show()
