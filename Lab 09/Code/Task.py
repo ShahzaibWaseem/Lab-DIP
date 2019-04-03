@@ -19,28 +19,35 @@ def Smoothening(image, filter):
 
 def main():
 	IMAGE_PATH = "../Images/"
-	smoothing_image = "smoothing.tif"
-	windowSize = 7			# Change this to whatever filter you require
+	smoothing_image = "unsharpmasking.tif"
+	windowSize = 3			# Change this to whatever filter you require
 
 	image = cv2.imread(IMAGE_PATH + smoothing_image, 0)
+	# Task 1a Filter
 	# filter = np.ones((windowSize, windowSize)) / (windowSize * windowSize)
+
+	# Task 1b Filter
 	# filter = np.array([ [1, 2, 1], [2, 4, 2], [1, 2, 1] ], np.int32) / 16
 
-	sigma = 1.4
-	gaussianFilter = np.array([ [1, 1, 2, 2, 2, 1, 1],
-								[1, 2, 2, 4, 2, 2, 1],
-								[2, 2, 4, 8, 4, 2, 2],
-								[2, 4, 8,16, 8, 4, 2],
-								[2, 2, 4, 8, 4, 2, 2],
-								[1, 2, 2, 4, 2, 2, 1],
-								[1, 1, 2, 2, 2, 1, 1] ], np.float)
+	# Task 2 Filter
+	# sigma = 1.4
+	# gaussianFilter = np.array([ [1, 1, 2, 2, 2, 1, 1],
+	# 							[1, 2, 2, 4, 2, 2, 1],
+	# 							[2, 2, 4, 8, 4, 2, 2],
+	# 							[2, 4, 8,16, 8, 4, 2],
+	# 							[2, 2, 4, 8, 4, 2, 2],
+	# 							[1, 2, 2, 4, 2, 2, 1],
+	# 							[1, 1, 2, 2, 2, 1, 1] ], np.float)
+	# gaussianFilter = gaussianFilter / np.sum(gaussianFilter * sigma)
 
-	gaussianFilter = gaussianFilter / np.sum(gaussianFilter * sigma)
+	# Task 3 Filter
+	filter = np.array([ [1, 2, 1], [2, 4, 2], [1, 2, 1]], dtype=np.int32)
+	newImage = Smoothening(image, filter)
 
-	newImage = Smoothening(image.copy(), gaussianFilter)
+	newImage = image + (image - newImage)
 
 	stackedImage = np.hstack((image, newImage))
-	cv2.imwrite(IMAGE_PATH + "gaussianFilter " + smoothing_image.split(".")[0] + ".png", newImage)
+	cv2.imwrite(IMAGE_PATH + "output " + smoothing_image.split(".")[0] + ".png", newImage)
 
 	plt.imshow(stackedImage, cmap='gray')
 	plt.show()
