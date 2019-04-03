@@ -23,11 +23,12 @@ def main():
 	windowSize = 3			# Change this to whatever filter you require
 
 	image = cv2.imread(IMAGE_PATH + smoothing_image, 0)
-	filter = np.ones((windowSize, windowSize)) / (windowSize * windowSize)
+	# filter = np.ones((windowSize, windowSize)) / (windowSize * windowSize)
+	filter = np.array([ [1, 2, 1], [2, 4, 2], [1, 2, 1] ], np.int32) / 16
 	newImage = Smoothening(image.copy(), filter)
 
 	stackedImage = np.hstack((image, newImage))
-	cv2.imwrite(IMAGE_PATH + str(windowSize) + "x" + str(windowSize) + smoothing_image.split(".")[0] + ".png", newImage)
+	cv2.imwrite(IMAGE_PATH + "weightedAverage " + smoothing_image.split(".")[0] + ".png", newImage)
 
 	plt.imshow(stackedImage, cmap='gray')
 	plt.show()
