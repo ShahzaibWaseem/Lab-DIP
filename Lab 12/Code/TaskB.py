@@ -49,10 +49,10 @@ def DivideBoundingBox(centroid_image, top, bottom, left, right, cx, cy):
 	segmented_image = cv2.rectangle(segmented_image, (left, cy), (cx, bottom), (0,255,0), 3)	# top right
 	segmented_image = cv2.rectangle(segmented_image, (cx, cy), (right, bottom), (0,255,0), 3)	# bottom right
 
-	top_left = centroid_image[left: cx, top: cy]
-	bottom_left = centroid_image[cx: right, top: cy]
-	top_right = centroid_image[left: cx, cy: bottom]
-	bottom_right = centroid_image[cx: right, cy: bottom]
+	top_left = centroid_image[top: cy, left: cx]
+	bottom_left = centroid_image[top: cy, cx: right]
+	top_right = centroid_image[cy: bottom, left: cx]
+	bottom_right = centroid_image[cy: bottom, cx: right]
 
 	return top_left, bottom_left, top_right, bottom_right, segmented_image
 
@@ -101,6 +101,11 @@ def main():
 	top_left, bottom_left, top_right, bottom_right, segmented_image = DivideBoundingBox(centroid_image, top, bottom, left, right, cy, cx)
 	cv2.imwrite("../Images/" + IMAGE_PATH.split('/')[-1].split('.')[0] + "_segmented.png", segmented_image)
 	cv2.imshow("Divided Image", segmented_image)
+
+	cv2.imshow("top_left", top_left)
+	cv2.imshow("bottom_left", bottom_left)
+	cv2.imshow("top_right", top_right)
+	cv2.imshow("bottom_right", bottom_right)
 
 	# Task 4
 	TL = B2W_Transitions(top_left)
